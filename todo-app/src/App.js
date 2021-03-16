@@ -5,7 +5,7 @@ import TodoList from './components/TodoList';
 
 const createBulkTodos = () => {
   const array = [];
-  for(let i=1; i<=2500; i++) {
+  for(let i=1; i<=2; i++) {
     array.push({
       id: i,
       text: `할일 ${i}`,
@@ -22,14 +22,33 @@ const App = () => {
   let nextId = useRef(todos.length+1);
 
   let onInsert = useCallback(text => {
+    console.log('onInsert1')
     setTodos(todos => todos.concat({
       id: nextId.current,
       text,
       checked: false
     }))
 
+    // setTodos(todos.concat({
+    //   id: nextId.current,
+    //   text,
+    //   checked: false
+    // }))
+
     nextId.current++;
   }, [])
+
+  // let onInsert = text => {
+  //   console.log('onInsert2')
+
+  //   setTodos(todos.concat({
+  //     id: nextId.current,
+  //     text,
+  //     checked: false
+  //   }))
+
+  //   nextId.current++;
+  // }
 
   let onToggle = useCallback(id => {
     setTodos(todos => todos.map(todo => todo.id === id ? { ...todo, checked: !todo.checked } : todo))
