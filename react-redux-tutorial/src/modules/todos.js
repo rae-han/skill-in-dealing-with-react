@@ -11,7 +11,7 @@ const REMOVE = 'todos/REMOVE';
 // })
 export const changeInput = createAction(CHANGE_INPUT, input => input)
 
-let id = 3;
+let id = 4;
 // export const insert = text => ({
 //   type: INSERT,
 //   todo: {
@@ -49,31 +49,38 @@ const initialState = {
 }
 
 
-const todos = (state=initialState, action) => {
-  switch(action.type) {
-    case CHANGE_INPUT:
-      return {
-        ...state,
-        input: action.input
-      }
-    case INSERT:
-      return {
-        ...state,
-        todos: state.todos.concat(action.todo)
-      }
-    case TOGGLE:
-      return {
-        ...state,
-        todos: state.todos.map(todo => todo.id === action.id ? {...todo, done: !todo.done } : todo )
-      }
-    case REMOVE:
-      return {
-        ...state,
-        todos: state.todos.filter(todo=>todo.id!==action.id)
-      }
-    default:
-      return state;
-  }
-}
+// const todos = (state=initialState, action) => {
+//   switch(action.type) {
+//     case CHANGE_INPUT:
+//       return {
+//         ...state,
+//         input: action.input
+//       }
+//     case INSERT:
+//       return {
+//         ...state,
+//         todos: state.todos.concat(action.todo)
+//       }
+//     case TOGGLE:
+//       return {
+//         ...state,
+//         todos: state.todos.map(todo => todo.id === action.id ? {...todo, done: !todo.done } : todo )
+//       }
+//     case REMOVE:
+//       return {
+//         ...state,
+//         todos: state.todos.filter(todo=>todo.id!==action.id)
+//       }
+//     default:
+//       return state;
+//   }
+// }
+
+const todos = handleActions({
+  [CHANGE_INPUT]: (state, action) => ({ ...state, input: action.payload }),
+  [INSERT]: (state, { payload: todo }) => ({ ...state, todos: state.todos.concat(todo) }),
+  [TOGGLE]: (state, action) => ({ ...state, todos: state.todos.map(todo => todo.id === action.payload ? { ...todo, done: !todo.done } : todo ) }),
+  [REMOVE]: (state, action) => ({ ...state, todos: state.todos.filter(todo => todo.id !== action.payload) })
+}, initialState)
 
 export default todos;
