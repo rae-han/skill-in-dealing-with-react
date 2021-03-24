@@ -20,7 +20,14 @@ const Todos = ({ input, todos, onChangeInput, onInsert, onToggle, onRemove }) =>
 
   const onSubmit = e => {
     e.preventDefault();
-    console.log(input)
+    
+    if(input==='') {
+      onChangeInput('blank')
+      // input = 'blank';
+      console.log(1, input)
+    }
+    console.log(2, input)
+
     onInsert(input);
     onChangeInput('');
     textInput.current.focus();
