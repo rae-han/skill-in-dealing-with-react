@@ -23,10 +23,10 @@ const Todos = ({ input, todos, onChangeInput, onInsert, onToggle, onRemove }) =>
     e.preventDefault();
 
     if(input==='') { // useSelector를 이용해 가져온 값
-      // onChangeInput('blank') // store에 input을 바꾸는 함수
+      onChangeInput('blank') // store에 input을 바꾸는 함수
       console.log(1, input)
-      onInsert('blank')
-      return;
+      // onInsert('blank')
+      // return;
     }
     
     console.log(2, input)
