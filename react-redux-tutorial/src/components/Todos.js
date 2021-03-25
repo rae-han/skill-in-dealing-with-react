@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useStore } from 'react-redux';
 
 const TodoItem = ({ todo, onToggle, onRemove }) => {
   return (
@@ -20,12 +21,15 @@ const Todos = ({ input, todos, onChangeInput, onInsert, onToggle, onRemove }) =>
 
   const onSubmit = e => {
     e.preventDefault();
-    
-    if(input==='') {
-      onChangeInput('blank')
+
+    if(input==='') { // useSelector를 이용해 가져온 값
+      onChangeInput('blank') // store에 input을 바꾸는 함수
       // input = 'blank';
       console.log(1, input)
+      // onInsert('blank')
+      // return;
     }
+    
     console.log(2, input)
 
     onInsert(input);

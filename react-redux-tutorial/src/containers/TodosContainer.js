@@ -12,7 +12,7 @@ const TodosContainer = () => {
   }))
 
   const dispatch = useDispatch();
-  const onChangeInput = useCallback(input=>dispatch(changeInput(input)), [dispatch])
+  const onChangeInput = useCallback(input=>dispatch(changeInput(input)), [input])
   const onInsert = useCallback(text=>dispatch(insert(text)), [dispatch])
   const onToggle = useCallback(id=>dispatch(toggle(id)), [dispatch])
   const onRemove = useCallback(id=>dispatch(remove(id)), [dispatch])
