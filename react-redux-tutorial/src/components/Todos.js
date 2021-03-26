@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { useStore } from 'react-redux';
 
+console.log('Components/Todos')
+
 const TodoItem = ({ todo, onToggle, onRemove }) => {
   return (
     <div>
@@ -28,11 +30,11 @@ const Todos = ({ input, todos, onChangeInput, onInsert, onToggle, onRemove }) =>
       // onInsert('blank')
       // return;
     }
-    
+    console.log(6, textInput.current.value)    
     console.log(2, input)
 
     onInsert(input);
-    onChangeInput('');
+    // onChangeInput('');
     textInput.current.focus();
   }
 
