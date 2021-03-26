@@ -14,10 +14,10 @@ export const getPost = id => async dispatch => {
   dispatch({ type: GET_POST })
 
   try {
-    const resonse = await api.getPost(id)
+    const response = await api.getPost(id)
     dispatch({
       type: GET_POST_SUCCESS,
-      payload: resonse.data
+      payload: response.data
     })
   } catch (error) {
     dispatch({
@@ -37,7 +37,7 @@ export const getUsers = () => async dispatch => {
     const response = await api.getUsers();
     dispatch({
       type: GET_USERS_SUCCESS,
-      paylaod: response.data
+      payload: response.data
     })
   } catch (e) {
     dispatch({
