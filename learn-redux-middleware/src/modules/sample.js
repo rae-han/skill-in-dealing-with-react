@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
-
 import * as api from '../libs/api';
+import createRequestThunk from '../libs/createRequestThunk'
 
 const GET_POST = 'sample/GET_POST'; // 요청 시작
 const GET_POST_SUCCESS = 'sample/GET_POST_SUCCESS'; // 요청 성공
@@ -10,25 +10,27 @@ const GET_USERS = 'sample/GET_USERS'
 const GET_USERS_SUCCESS = 'sample/GET_USER_SUCCESS'
 const GET_USERS_FAILURE = 'sample/GET_USER_FAILURE'
 
-export const getPost = id => async dispatch => {
-  dispatch({ type: GET_POST })
+// export const getPost = id => async dispatch => {
+//   dispatch({ type: GET_POST })
 
-  try {
-    const response = await api.getPost(id)
-    dispatch({
-      type: GET_POST_SUCCESS,
-      payload: response.data
-    })
-  } catch (error) {
-    dispatch({
-      type: GET_POST_FAILURE,
-      payload: error,
-      error: true
-    });
+//   try {
+//     const response = await api.getPost(id)
+//     dispatch({
+//       type: GET_POST_SUCCESS,
+//       payload: response.data
+//     })
+//   } catch (error) {
+//     dispatch({
+//       type: GET_POST_FAILURE,
+//       payload: error,
+//       error: true
+//     });
 
-    throw error;
-  }
-};
+//     throw error;
+//   }
+// };
+
+export const getPost = createRequestThunk(GET_POST, api.getPost)
 
 export const getUsers = () => async dispatch => {
   dispatch({ type: GET_USERS });

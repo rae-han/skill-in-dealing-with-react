@@ -7,13 +7,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import rootReducer from './modules'
 // import loggerMiddleware from './libs/loggerMiddleware'
-import { createLogger } from 'redux-logger'
+// import { createLogger } from 'redux-logger'
 import ReduxThunk from 'redux-thunk';
 
 
-const logger = createLogger();
+// const logger = createLogger();
 // const store = createStore(rootReducer, applyMiddleware(loggerMiddleware))
-const store = createStore(rootReducer, applyMiddleware(logger, ReduxThunk))
+// const store = createStore(rootReducer, applyMiddleware(logger, ReduxThunk))
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk))
 
 ReactDOM.render(
   <Provider store={store}>
