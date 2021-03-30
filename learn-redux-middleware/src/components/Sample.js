@@ -1,10 +1,12 @@
 import React from 'react';
 
 const Sample = ({ loadingPost, loadingUsers, post, users }) => {
+  console.log(loadingPost)
+
   return (
     <div>
       <section>
-        <h1>포스트</h1>
+        <h1>포스트 {`- ${loadingPost}`}</h1>
         { loadingPost && `로딩 중...` }
         { !loadingPost && post && (
           <div>
@@ -15,7 +17,7 @@ const Sample = ({ loadingPost, loadingUsers, post, users }) => {
       </section>
       <hr />
       <section>
-        <h1>사용자 목록</h1>
+        <h1>사용자 목록 {loadingUsers}</h1>
         {loadingUsers && `로딩 중...`}
         {!loadingUsers && users && (
           <ul>

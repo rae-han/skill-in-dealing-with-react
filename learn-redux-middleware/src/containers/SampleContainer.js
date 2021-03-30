@@ -9,11 +9,11 @@ const SampleContainer = () => {
   const post = useSelector(state => state.sample.post);
   const users = useSelector(state => state.sample.users)  
   const { GET_POST: loadingPost, GET_USERS: loadingUsers } = useSelector(state => state.sample.loadding);
+  console.log(loadingPost, loadingUsers)
 
   const dispatch = useDispatch();
   const fetchPost = useCallback(id => (dispatch(getPost(id))), [dispatch]) 
   const fetchUsers = useCallback(id => (dispatch(getUsers(id))), [dispatch])
-
 
   useEffect(() => {
     fetchPost(1);

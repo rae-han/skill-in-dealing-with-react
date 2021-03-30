@@ -55,7 +55,7 @@ export const getUsers = () => async dispatch => {
 const initialState = {
   loadding: {
     GET_POST: false,
-    GET_USERS: false
+    GET_USERS: true
   },
   post: null,
   users: null
