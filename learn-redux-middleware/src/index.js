@@ -10,7 +10,7 @@ import rootReducer, { rootSaga } from './modules'
 // import { createLogger } from 'redux-logger'
 import ReduxThunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga'
-
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 // const logger = createLogger();
 // const store = createStore(rootReducer, applyMiddleware(loggerMiddleware))
@@ -18,7 +18,8 @@ import createSagaMiddleware from 'redux-saga'
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
   rootReducer, 
-  applyMiddleware(ReduxThunk, sagaMiddleware)
+  // applyMiddleware(ReduxThunk, sagaMiddleware)
+  composeWithDevTools(applyMiddleware(ReduxThunk, sagaMiddleware))
 )
 sagaMiddleware.run(rootSaga)
 
