@@ -1,6 +1,9 @@
-import { handleActions } from 'redux-actions';
+import { createAction, handleActions } from 'redux-actions';
+import { call, put, takeLatest } from 'redux-saga/effects'
 import * as api from '../libs/api';
-import createRequestThunk from '../libs/createRequestThunk'
+// import createRequestThunk from '../libs/createRequestThunk'
+import { startLoading, finishLoading } from './loading'
+import createRequestSaga from '../libs/createRequestSaga'
 
 const GET_POST = 'sample/GET_POST'; // 요청 시작
 const GET_POST_SUCCESS = 'sample/GET_POST_SUCCESS'; // 요청 성공
@@ -30,8 +33,8 @@ const GET_USERS_FAILURE = 'sample/GET_USER_FAILURE'
 //   }
 // };
 
-export const getPost = createRequestThunk(GET_POST, api.getPost)
-
+// export const getPost = createRequestThunk(GET_POST, api.getPost)
+export const getPost = createAction(GET_POST, id => id)
 export const getUsers = () => async dispatch => {
   dispatch({ type: GET_USERS });
 
@@ -50,6 +53,32 @@ export const getUsers = () => async dispatch => {
 
     throw e;
   }
+}
+
+// function* getPostSaga(action) {
+//   yield put(startLoading(GET_POST));
+
+//   try {
+//     const post = yield call(api.getPost, action.payload)
+//     yield put({
+//       type: GET_POST_SUCCESS,
+//       payload: post.data
+//     })
+//   } catch (e) {
+//     yield put({
+//       type: GET_POST_FAILURE,
+//       payload: e,
+//       error: true
+//     })
+//   }
+
+//   yield put(finishLoading(GET_POST));
+// }
+
+const getPostSaga = createRequestSaga(GET_POST, api.getPost)
+
+export function* sampleSaga() {
+  yield takeLatest(GET_POST, getPostSaga)
 }
 
 const initialState = {
