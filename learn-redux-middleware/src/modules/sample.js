@@ -82,7 +82,7 @@ export function* sampleSaga() {
 }
 
 const initialState = {
-  loadding: {
+  loading: {
     GET_POST: false,
     GET_USERS: true
   },

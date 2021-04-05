@@ -9,15 +9,18 @@ import rootReducer from './modules'
 // import loggerMiddleware from './libs/middlewares/customLogger'
 import { createLogger } from 'redux-logger'
 import ReduxThunk from 'redux-thunk'
+import { BrowserRouter } from 'react-router-dom'
 
 const logger = createLogger({ collapsed: true })
 
 const store = createStore(rootReducer, applyMiddleware(logger, ReduxThunk));
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <BrowserRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
