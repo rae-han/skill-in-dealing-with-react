@@ -8,7 +8,7 @@ const { useEffect } = React;
 const SampleContainer = () => {
   const post = useSelector(state => state.sample.post);
   const users = useSelector(state => state.sample.users)  
-  const { GET_POST: loadingPost, GET_USERS: loadingUsers } = useSelector(state => state.sample.loadding);
+  const { GET_POST: loadingPost, GET_USERS: loadingUsers } = useSelector(state => state.sample.loading);
   console.log(loadingPost, loadingUsers)
 
   const dispatch = useDispatch();
