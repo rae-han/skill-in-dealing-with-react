@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getPost } from '../modules/posts'
 import Post from '../components/Post'
 
 const PostContainer = ({postId}) => {
-  const { data, loading, error } = useSelctor(state => state.posts.post)
+  const { data, loading, error } = useSelector(state => state.posts.post)
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(postId)
     dispatch(getPost(postId));
   }, [dispatch, postId])
 

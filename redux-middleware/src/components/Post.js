@@ -1,6 +1,8 @@
 import React from 'react';
 
-const Post = ({ title, body }) => {
+const Post = ({ post }) => {
+  const {title, body} = post;
+
   return (
     <div>
       <h1>{title}</h1>
