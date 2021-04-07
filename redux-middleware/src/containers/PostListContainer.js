@@ -8,7 +8,7 @@ const PostListContainer = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(data) return;
+    // if(data) return;
     dispatch(getPosts())
   }, [data, dispatch])
 
