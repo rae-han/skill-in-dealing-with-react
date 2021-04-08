@@ -10,7 +10,7 @@ const PostListContainer = () => {
   useEffect(() => {
     // if(data) return;
     dispatch(getPosts())
-  }, [data, dispatch])
+  }, [dispatch]) // 여기에 data를 추가하면 왜 자꾸 불러올까?
 
   // if (loading) return <div>로딩중...</div>;
   if (loading && !data) return <div>로딩중...</div>;
