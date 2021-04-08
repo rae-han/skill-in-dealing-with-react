@@ -18,6 +18,7 @@ export const createPromiseThunkById = (type, promiseCreator, idSelector = defaul
   const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
 
   return param => async dispatch => {
+    console.log(param)
     const id = idSelector(param);
     dispatch({ type, meta: id });
     try {

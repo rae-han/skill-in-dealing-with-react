@@ -8,8 +8,6 @@ const PostContainer = ({postId}) => {
   const { data, loading, error } = useSelector(state => state.posts.post[postId]) || { loading: false, data: null, error: null };
   const dispatch = useDispatch();
 
-  console.log(data)
-
   useEffect(() => {
     if(data) return;
     dispatch(getPost(postId));
