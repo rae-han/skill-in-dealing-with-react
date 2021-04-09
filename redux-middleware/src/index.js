@@ -15,7 +15,11 @@ import createSagaMiddleware from 'redux-saga'
 
 const logger = createLogger({ collapsed: true })
 const customHistory = createBrowserHistory();
-const sagaMiddleware = createSagaMiddleware();
+const sagaMiddleware = createSagaMiddleware({
+  context: {
+    history: customHistory
+  }
+});
 // const store = createStore(rootReducer, applyMiddleware(ReduxThunk, logger));
 const store = createStore(rootReducer, applyMiddleware(
   ReduxThunk.withExtraArgument({ history: customHistory }),
