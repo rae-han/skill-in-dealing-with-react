@@ -1,34 +1,70 @@
-export const createPromiseThunk = (type, promiseCreator) => {
+// export const createPromiseThunk = (type, promiseCreator) => {
+//   const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
+
+import { call, put } from "redux-saga/effects";
+
+//   return param => async dispatch => {
+//     dispatch({type, param});
+
+//     try {
+//       const payload = await promiseCreator(param);
+//       dispatch({ type: SUCCESS, payload })
+//     } catch(error) {
+//       dispatch({ type: ERROR, payload: error, error: true })
+//     }
+//   };
+// };
+
+// const defaultIdSelecctor = param => param;
+
+// export const createPromiseThunkById = (type, promiseCreator, idSelector = defaultIdSelecctor) => {
+//   const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
+
+//   return param => async dispatch => {
+//     console.log(param)
+//     const id = idSelector(param);
+//     dispatch({ type, meta: id });
+//     try {
+//       const payload = await promiseCreator(param);
+//       dispatch({ type: SUCCESS, payload, meta: id });
+//     } catch (e) {
+//       dispatch({ type: ERROR, error: true, payload: e, meta: id });
+//     }
+//   };
+// }
+
+export const createPromiseSaga = (type, promiseCreator) => {
   const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
 
-  return param => async dispatch => {
-    dispatch({type, param});
-
+  return function* saga(action) {
     try {
-      const payload = await promiseCreator(param);
-      dispatch({ type: SUCCESS, payload })
-    } catch(error) {
-      dispatch({ type: ERROR, payload: error, error: true })
+      const payload = yield call(promiseCreator, action.payload);
+      yield put({ type: SUCCESS, payload })
+    } catch(e) {
+      yield put({ type: ERROR, error: true, payload: e });
     }
-  };
-};
-
-const defaultIdSelecctor = param => param;
-export const createPromiseThunkById = (type, promiseCreator, idSelector = defaultIdSelecctor) => {
-  const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
-
-  return param => async dispatch => {
-    console.log(param)
-    const id = idSelector(param);
-    dispatch({ type, meta: id });
-    try {
-      const payload = await promiseCreator(param);
-      dispatch({ type: SUCCESS, payload, meta: id });
-    } catch (e) {
-      dispatch({ type: ERROR, error: true, payload: e, meta: id });
-    }
-  };
+  }
 }
+
+// // 특정 id의 데이터를 조회하는 용도로 사용하는 사가
+// // API를 호출 할 때 파라미터는 action.payload를 넣고,
+// // id 값을 action.meta로 설정합니다.
+
+export const createPromiseSagaById = (type, promiseCreator) => {
+  const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
+
+  return function* saga(action) {
+    const id = action.meta;
+
+    try {
+      const payload = yield call(promiseCreator, action.payload);
+      yield put({ type: SUCCESS, payload, meta: id });
+    } catch(e) {
+      yield put({ type: ERROR, error: e, meta: id })
+    }
+  }
+}
+
 
 
 export const reducerUtils = {
