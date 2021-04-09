@@ -5,17 +5,25 @@ import { Provider } from 'react-redux'
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import rootReducer from './modules'
+import rootReducer, { rootSaga } from './modules'
 // import loggerMiddleware from './libs/middlewares/customLogger'
 import { createLogger } from 'redux-logger'
 import ReduxThunk from 'redux-thunk'
 import { Router, BrowserRouter } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
+import createSagaMiddleware from 'redux-saga'
 
 const logger = createLogger({ collapsed: true })
 const customHistory = createBrowserHistory();
+const sagaMiddleware = createSagaMiddleware();
 // const store = createStore(rootReducer, applyMiddleware(ReduxThunk, logger));
-const store = createStore(rootReducer, applyMiddleware(ReduxThunk.withExtraArgument({ history: customHistory }), logger));
+const store = createStore(rootReducer, applyMiddleware(
+  ReduxThunk.withExtraArgument({ history: customHistory }),
+  sagaMiddleware, 
+  logger
+));
+
+sagaMiddleware.run(rootSaga)
 
 ReactDOM.render(
   <Router history={customHistory}>
