@@ -65,8 +65,6 @@ export const createPromiseSagaById = (type, promiseCreator) => {
   }
 }
 
-
-
 export const reducerUtils = {
   initial: (initialData = null) => ({
     loading: false,
