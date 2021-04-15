@@ -1,8 +1,18 @@
 const Koa = require('koa');
 const Router = require('koa-router')
+const bodyParser = require('koa-bodyparser');
+
+const api = require('./api')
 
 const app = new Koa();
 const router = new Router();
+
+// app.use((ctx, next) => {
+//   ctx.body = 'app use';
+//   next();
+// })
+
+router.use('/api', api.routes());
 
 router.get('/', ctx => {
   ctx.body = 'index'
@@ -18,6 +28,7 @@ router.get('/posts', ctx => {
   ctx.body = id ? `포스트 #${id}` : '포스트 아이디가 없습니다.'
 })
 
+app.use(bodyParser())
 app.use(router.routes()).use(router.allowedMethods())
 
 app.listen(4000, () => {
