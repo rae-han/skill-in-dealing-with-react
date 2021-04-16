@@ -15,6 +15,7 @@
     "dotenv": "^8.2.0",
     "eslint-config-prettier": "^8.2.0",
     "esm": "^3.2.25",
+    "joi": "^17.4.0",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^10.0.0",
@@ -25,4 +26,3 @@
     "nodemon": "^2.0.7"
   }
 }
-

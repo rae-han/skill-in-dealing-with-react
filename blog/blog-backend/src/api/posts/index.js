@@ -23,7 +23,7 @@ posts.post('/', postsCtrl.write)
 const post = new Router();
 post.get('/', postsCtrl.read)
 post.delete('/', postsCtrl.remove)
-posts.patch('/', postsCtrl.update)
+post.patch('/', postsCtrl.update)
 posts.use('/:id', postsCtrl.checkObjectId, post.routes())
 
 // module.exports = posts;
