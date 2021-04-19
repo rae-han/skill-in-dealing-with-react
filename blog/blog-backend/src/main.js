@@ -11,6 +11,7 @@ import mongoose from 'mongoose';
 
 // const api = require('./api')
 import api from './api'
+import jwtMiddleware from './lib/jwtMiddleware'
 // import createFakeData from './createFakeData'
 
 
@@ -39,6 +40,7 @@ const router = new Router();
 // })
 
 router.use('/api', api.routes());
+app.use(jwtMiddleware)
 
 router.get('/', ctx => {
   ctx.body = 'index'
