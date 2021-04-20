@@ -13,6 +13,28 @@ export const checkObjectId = (ctx, next) => {
   return next();
 }
 
+export const getPostById = async (ctx, next) => {
+  const { id } = ctx.params;
+  if(!ObjectId.isValid(id)) {
+    ctx.status = 400;
+    return;
+  }
+
+  try {
+    const post = await Post.findById(id);
+    //포스트가 존재하지 않을 때
+    if(!post) {
+      ctx.status = 404;
+      return;
+    }
+    ctx.state.post = post;
+    return next();
+  } catch (e) {
+    ctx.throw(500, e)
+  }
+  return next();
+}
+
 /*
   POST /api/posts
   {

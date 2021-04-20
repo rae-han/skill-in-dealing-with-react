@@ -56,7 +56,6 @@ export const register = async ctx => {
 }
 
 export const login = async ctx => {
-  console.log(`/api/auth func login`)
   const { username, password } = ctx.request.body
 
   if(!username || !password) {
@@ -90,7 +89,6 @@ export const login = async ctx => {
 
 export const check = async ctx => {
   const { user } = ctx.state;
-  console.log(user)
   if(!user) {
     ctx.status = 401;
     return;
@@ -99,7 +97,6 @@ export const check = async ctx => {
 }
 
 export const logout = async ctx => {
-  console.log(`api auth logout`)
   ctx.cookies.set('access_token');
   ctx.status = 204 // No Content
 }
