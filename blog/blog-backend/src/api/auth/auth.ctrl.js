@@ -18,7 +18,7 @@ export const register = async ctx => {
     password: Joi.string().required(),
   })
 
-  const result = schema.validate(ctx.request.body);
+  const result = schema.validate(ctx.request.body);register
 
   if(result.error) {
     ctx.status = 400;

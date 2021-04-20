@@ -32,13 +32,10 @@ export const getPostById = async (ctx, next) => {
   } catch (e) {
     ctx.throw(500, e)
   }
-  return next();
 }
 
 export const checkOwnPost = (ctx, next) => {
   const { user, post } = ctx.state;
-  console.log(post.user);
-  console.log(user)
   if(post.user._id.toString() !== user._id) {
     ctx.status = 403;
     return;
@@ -62,18 +59,14 @@ export const write = async ctx => {
   })
 
   const result = schema.validate(ctx.request.body);
-  console.log(result)
-  console.log(1)
   if(result.error) {
     ctx.status = 400;
     ctx.body = result.error;
     return;
   }
 
-  console.log(2)
 
   const { title, body, tags } = ctx.request.body;
-  console.log(ctx.state.user)
   const post = new Post({
     title, 
     body,
@@ -89,6 +82,9 @@ export const write = async ctx => {
   }
 };
 
+/* 
+  GET /api/posts?username=&tag=&page=
+*/
 export const list = async ctx => {
   const page = parseInt(ctx.query.page || '1', 10);
   const pageSize = parseInt(ctx.query.pageSize || '10', 10);
@@ -98,14 +94,21 @@ export const list = async ctx => {
     return;
   }
 
+  const { tag, username } = ctx.query;
+  const query = {
+    ...(username ? { 'user.username': username } : {}),
+    ...(tag ? { tags: tag } : {})
+  }
+
+
   try {
     const posts = await Post
-      .find()
+      .find(query)
       .sort({ _id: -1})
       .limit(pageSize)
       .skip((page-1)*pageSize)
       .exec();
-    const postCount = await Post.countDocuments().exec();
+    const postCount = await Post.countDocuments(query).exec();
     
     ctx.set('Last-Page', Math.ceil(postCount/pageSize));
     ctx.body = posts
@@ -122,7 +125,6 @@ export const list = async ctx => {
 export const read = async ctx => {
   // const { id } = ctx.params;
   // if(!ObjectId.isValid(id)) {
-  //   console.log(`Not valid id`)
   //   ctx.status = 400;
   //   return;
   // }
@@ -152,7 +154,6 @@ export const remove = async ctx => {
 
 export const update = async ctx => {
   const { id } = ctx.params;
-  console.log(id)
 
   const schema = Joi.object().keys({
     title: Joi.string(),
@@ -161,7 +162,6 @@ export const update = async ctx => {
   })
 
   const result = schema.validate(ctx.request.body);
-  console.log(result)
   if(result.error) {
     ctx.status = 400;
     ctx.body = result.error;
