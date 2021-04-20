@@ -26,6 +26,7 @@ export const write = async ctx => {
     title: Joi.string().required(),
     body: Joi.string().required(),
     tags: Joi.array().items(Joi.string()).required(),
+    user: ctx.state.user
   })
 
   const result = schema.validate(ctx.request.body);
