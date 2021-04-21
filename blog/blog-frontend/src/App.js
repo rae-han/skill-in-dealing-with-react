@@ -13,10 +13,10 @@ const App = () => {
     <>
       {/* <Route component={} path="" /> */}
       <Route component={PostListPage} path={['/@:username', '/']} exact/>
-      <Route component={PostPage} path="/login" />
+      <Route component={PostPage} path="/@:username/:postId" />
       <Route component={RegisterPage} path="/register" />
       <Route component={WritePage} path="/write" />
-      <Route component={LoginPage} path="/@:username/:postId" />
+      <Route component={LoginPage} path="/login" />
     </>
   );
 };
