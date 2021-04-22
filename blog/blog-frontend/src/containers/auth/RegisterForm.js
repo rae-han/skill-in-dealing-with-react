@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { withRouter } from 'react-router-dom'
 import { changeField, initializeForm, register } from '../../modules/auth';
+import { check } from '../../modules/user'
 import AuthForm from '../../components/auth/AuthForm';
 
-const RegisterForm = () => {
+const RegisterForm = ({ history }) => {
   const dispatch = useDispatch();
-  const { form, auth, authError } = useSelector(({auth}) => ({
+  const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
     form: auth.register,
     auth: auth.auth,
-    authError: auth.authError
+    authError: auth.authError,
+    user: user.user
   }));
 
   // 인풋 변경 이벤트 핸들러
@@ -37,8 +40,6 @@ const RegisterForm = () => {
   }, [dispatch])
 
   useEffect(() => {
-    console.log('do error')
-    console.log(auth, authError)
     if(authError) {
       console.log('Error!!')
       console.log(authError)
@@ -46,12 +47,16 @@ const RegisterForm = () => {
     if(auth) {
       console.log('Regisiter Success');
       console.log(auth)
+      dispatch(check())
     }
-  }, [auth, authError])
+  }, [auth, authError, dispatch])
 
   useEffect(() => {
-    dispatch(initializeForm('register'))
-  }, [dispatch])
+    console.log('check user')
+    if(user) {
+      history.push('/')
+    }
+  }, [history, user])
 
   return (
     <AuthForm 
@@ -63,4 +68,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default withRouter(RegisterForm);
