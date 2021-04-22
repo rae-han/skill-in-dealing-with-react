@@ -69,7 +69,7 @@ const textMap = {
 /** 
  * 회원가입 또는 로그인 폼을 보여준다.
  */
-const AuthForm = ({ type, form, onChange, onSubmit }) => {
+const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
   const text = textMap[type];
 
   return (
@@ -81,8 +81,9 @@ const AuthForm = ({ type, form, onChange, onSubmit }) => {
         { type === 'register' && (
           <StyledInput autoComplete="new-password" name="passwordConfirm" placeholder="비밀번호 확인" type="password" onChange={onChange} value={form.passwordConfirm}/>
         )}
+        { error && <ErrorMessage>{ error }</ErrorMessage>}
         {/* <Button fullWidth cyan>로그인</Button> */}
-        <ButtonWithMarginTop fullWidth cyan style={{ marginTop: '1rem' }}>로그인</ButtonWithMarginTop>
+        <ButtonWithMarginTop fullWidth cyan style={{ marginTop: '1rem' }}>{text}</ButtonWithMarginTop>
       </form>
       <Footer>
         { type === 'register' ? (
