@@ -1,9 +1,9 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import palette from '../../lib/styles/palette';
 
-const StyledButton = styled.button`
+const buttonStyle = css`
   border: none;
   border-radius: 4px;
   font-size: 1rem;
@@ -32,20 +32,23 @@ const StyledButton = styled.button`
     }
   `}
 `;
+const StyledLink = styled(Link)`
+  ${buttonStyle}
+`
 
-const Button = ({ to, history, ...rest }) => {
-  const onClick = e => {
-    if(to) {
-      history.push(to);
-    }
-    if(rest.onClick) {
-      rest.onClick(e);
-    }
-  }
+const StyledButton = styled.button`
+  ${buttonStyle}
+`;
 
-  return (
-    <StyledButton {...rest} onClick={onClick} />
+
+const ButtonLinkable = props => {
+  console.log(props.to)
+  return props.to ? (
+    <StyledLink {...props} cyan={props.cyan ? 1 : 0} />
+  ) : (
+    <StyledButton {...props} />
   );
 };
 
-export default withRouter(Button);
+export default ButtonLinkable;
+

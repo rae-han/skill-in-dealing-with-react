@@ -33,6 +33,7 @@ const RegisterForm = ({ history }) => {
     
     if([username, password, passwordConfirm].includes('')) {
       setError('반 칸을 모두 입력하세요.')
+      return;
     }
     
     if(password !== passwordConfirm) {
