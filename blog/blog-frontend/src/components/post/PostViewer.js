@@ -42,27 +42,41 @@ const Tags = styled.div`
 const PostContent = styled.div`
   font-size: 1.3125rem;
   color: ${palette.gray[8]};
-`
+`;
 
-const PostViewer = () => {
+const PostViewer = ({ post, error, loading }) => {
+  if(error) {
+    if(error.response?.status ===  404) {
+      return <PostViewerBlock>존재하지 않는 포스트입니다.</PostViewerBlock>
+    }
+    return <PostViewerBlock>요류 발생!</PostViewerBlock>
+  }
+
+  if(loading || !post) {
+    return null;
+  }
+
+  const { title, body, user, publishedDate, tags } = post;
+  console.log(publishedDate)
+
   return (
     <PostViewerBlock>
       <PostHead>
-        <h1>제목</h1>
+        <h1>{title}</h1>
         <SubInfo>
           <span>
-            <b>tester</b>
+            <b>{user.username}</b>
           </span>
-          <span>{new Date().toLocaleDateString()}</span>
+          <span>{new Date(publishedDate).toLocaleDateString()}</span>
         </SubInfo>
         <Tags>
-          <div className="tag">#xorm</div>
-          <div className="tag">#xorm</div>
-          <div className="tag">#xorm</div>
+          {tags.map(tag => (
+            <div className="tag" key={tag}>#{tag}</div>
+          ))}
         </Tags>
       </PostHead>
       <PostContent
-        dangerouslySetInnerHTML={{ __html: `<p>HTML <b>내용</b>입니다.</p>` }}
+        dangerouslySetInnerHTML={{ __html: body }}
       >
       </PostContent>
     </PostViewerBlock>
