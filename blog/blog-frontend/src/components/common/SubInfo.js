@@ -27,3 +27,5 @@ const SubInfo = ({ username, publishedDate, hasMarginTop }) => {
     </SubInfoBlock>
   )
 }
+
+export default SubInfo;
