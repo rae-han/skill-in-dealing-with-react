@@ -3,17 +3,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { readPost, unloadPost } from '../../modules/post';
+import { setOriginalPost } from '../../modules/write'
 
 import PostViewer from '../../components/post/PostViewer';
+import PostActionButtons from '../../components/post/PostActionButtons'
 
-
-const PostViewerContainer = ({ match }) => {
+const PostViewerContainer = ({ match, history }) => {
   const { postId } = match.params;
   const dispatch = useDispatch();
-  const { post, error, loading } = useSelector(({ post, loading }) => ({
+  const { post, error, loading, user } = useSelector(({ post, loading, user }) => ({
     post: post.post,
     error: post.error,
     loading: loading['post/READ_POST'],
+    user: user.user
   }))
 
   useEffect(() => {
@@ -24,7 +26,17 @@ const PostViewerContainer = ({ match }) => {
     }
   }, [dispatch, postId])
 
-  return (<PostViewer post={post} loading={loading} error={error} />);
+  const onEdit = () => {
+    dispatch(setOriginalPost(post));
+    history.push('/write')
+  }
+
+  const ownPost = ( user && user._id ) === (post?.user?._id);
+
+  return (<PostViewer 
+    post={post} loading={loading} error={error} 
+    actionButtons={ownPost && <PostActionButtons onEdit={onEdit} />}
+  />);
 };
 
 export default withRouter(PostViewerContainer);

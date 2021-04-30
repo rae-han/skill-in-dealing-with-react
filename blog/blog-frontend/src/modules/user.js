@@ -50,8 +50,6 @@ export default handleActions({
   //   checkError: null
   // }),
   [CHECK_SUCCESS]: (state, { payload: user }) => {
-    console.log(user)
-    
     return {
       ...state,
       user,
